@@ -1,0 +1,29 @@
+{
+  "insults": [
+    "idiot", "dumb", "stupid", "moron", "hurensohn", 
+    "bastard", "wichser", "arschloch", "bitch", 
+    "slut", "whore", "motherfucker", "asshole"
+  ],
+  "sexual_harassment": [
+    "dick", "penis", "cock", "pussy", "tits", 
+    "boobs", "ficken", "bumsen", "blasen", 
+    "lecken", "anal", "cum", "blowjob", 
+    "handjob", "gangbang", "milf", "bdsm", 
+    "porn", "xxx"
+  ],
+  "discrimination_racism": [
+    "nigger", "negro", "monkey", "kanake", 
+    "türke", "jude", "fag", "faggot", 
+    "dyke", "retard", "cripple"
+  ],
+  "violence_threats": [
+    "kill", "murder", "shoot", "stab", 
+    "vergewaltigen", "umbringen", "töten", 
+    "bomb", "terrorist", "jihad", "isis"
+  ],
+  "illegal_activities": [
+    "drugs", "meth", "coke", "heroin", 
+    "lsd", "crystal", "weed", "cannabis", 
+    "childporn", "cp", "kiddie porn"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "727175371211",
+    "project_id": "connfy-getsocialapp",
+    "storage_bucket": "connfy-getsocialapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727175371211:android:dd0d680134949abbb7fe4e",
+        "android_client_info": {
+          "package_name": "com.slice.newconnfy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727175371211-dujgnilu11j3l8n5o55c8ka84pfksdin.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.slice.newconnfy",
+            "certificate_hash": "b1eb9520e86ccda40f2b63c41fcc422f0625c236"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaU-bzluZGUy24yyHczcIcuG5GU65HD6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Connfy</string>
+ <!-- <string name="facebook_app_id">824055379618632</string>
+  <string name="fb_login_protocol_scheme">fb824055379618632</string>
+  <string name="facebook_client_token">897728117800ac119fb343ee27236cc9</string>-->
+  <string name="facebook_application_id">824055379618632</string>
+  <!-- <string name="facebook_application_id">980142660234648</string>-->
+  <!-- <string name="facebook_client_token">e48cfcc5222f1a5873796956330ff08b</string>-->
+  <!-- <string name="facebook_client_token">94ef78bb9cad0617ca22488a30200606</string>-->
+  <string name="facebook_client_token">897728117800ac119fb343ee27236cc9</string>
+  <string name="fb_login_protocol_scheme">fb8240553796186321</string>
+  <string name="default_web_client_id">727175371211-dujgnilu11j3l8n5o55c8ka84pfksdin.apps.googleusercontent.com</string>
+
+</resources>

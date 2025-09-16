@@ -1,0 +1,129 @@
+platform :ios, '15.0'
+
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+project 'Runner', {
+  'Debug' => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
+
+def flutter_root
+  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+  unless File.exist?(generated_xcode_build_settings_path)
+    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
+  end
+
+  File.foreach(generated_xcode_build_settings_path) do |line|
+    matches = line.match(/FLUTTER_ROOT\=(.*)/)
+    return matches[1].strip if matches
+  end
+  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
+end
+
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+flutter_ios_podfile_setup
+
+target 'Runner' do
+  use_frameworks! :linkage => :static
+
+  flutter_install_all_ios_pods(File.dirname(File.realpath(__FILE__)))
+
+  pod 'Toast', '~> 4.1'
+
+
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+end
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+
+    if target.name == 'BoringSSL-GRPC'
+      target.source_build_phase.files.each do |file|
+        if file.settings && file.settings['COMPILER_FLAGS']
+          flags = file.settings['COMPILER_FLAGS'].split
+          flags.reject! { |flag| flag == '-GCC_WARN_INHIBIT_ALL_WARNINGS' }
+          file.settings['COMPILER_FLAGS'] = flags.join(' ')
+        end
+      end
+    end
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'i386'
+      config.build_settings['ARCHS[sdk=iphonesimulator*]'] = 'x86_64 arm64'
+
+      # 🧨 Aggressively remove any flags containing '-G' from all compiler flags
+      ['OTHER_CFLAGS', 'OTHER_CPLUSPLUSFLAGS', 'OTHER_LDFLAGS'].each do |flag_type|
+        flags = config.build_settings[flag_type]
+        if flags.is_a?(Array)
+          config.build_settings[flag_type] = flags.reject { |flag| flag.include?('-G') }
+        elsif flags.is_a?(String)
+          config.build_settings[flag_type] = flags.split(' ').reject { |flag| flag.include?('-G') }.join(' ')
+        end
+      end
+      # ✨ ADD THIS SECTION FOR PERMISSION HANDLER ✨
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+        
+        # Enable location permissions
+        'PERMISSION_LOCATION=1',
+        'PERMISSION_LOCATION_WHENINUSE=1',
+        'PERMISSION_LOCATION_ALWAYS=1',
+        
+        # Add other permissions you need
+        'PERMISSION_NOTIFICATIONS=1',
+        'PERMISSION_PHOTOS=1'
+      ]
+    end
+
+    flutter_additional_ios_build_settings(target)
+  end
+end
+
+
+# # Uncomment this line to define a global platform for your project
+# # platform :ios, '12.0'
+
+# # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+# ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+# project 'Runner', {
+#   'Debug' => :debug,
+#   'Profile' => :release,
+#   'Release' => :release,
+# }
+
+# def flutter_root
+#   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+#   unless File.exist?(generated_xcode_build_settings_path)
+#     raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
+#   end
+
+#   File.foreach(generated_xcode_build_settings_path) do |line|
+#     matches = line.match(/FLUTTER_ROOT\=(.*)/)
+#     return matches[1].strip if matches
+#   end
+#   raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
+# end
+
+# require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+# flutter_ios_podfile_setup
+
+# target 'Runner' do
+#   use_frameworks!
+#   use_modular_headers!
+
+#   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+#   target 'RunnerTests' do
+#     inherit! :search_paths
+#   end
+# end
+
+# post_install do |installer|
+#   installer.pods_project.targets.each do |target|
+#     flutter_additional_ios_build_settings(target)
+#   end
+# end
